@@ -1,7 +1,7 @@
 <script>
-  import { tileLayer as TileLayer } from 'leaflet';
+  import { tiledMapLayer as TiledMapLayer } from 'esri-leaflet';
   export default {
-    name: 'TileLayer',
+    name: 'EsriTiledMapLayer',
     props: ['url'],
     mounted() {
       const leafletElement = this.$leafletElement = this.createLeafletElement();
@@ -14,7 +14,8 @@
     render(h) { return; },
     methods: {
       createLeafletElement() {
-        const mapLayer = new TileLayer(this.$props.url);
+        const props = Object.assign({}, this.$props);
+        const mapLayer = new TiledMapLayer(props);
         return mapLayer;
       },
       parentMounted(parent) {

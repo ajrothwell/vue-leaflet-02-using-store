@@ -42,7 +42,7 @@
 
 <style>
   .map {
-    height: 300px;
-    width: 1000px;
+    height: 400px;
+    width: 400px;
   }
 </style>

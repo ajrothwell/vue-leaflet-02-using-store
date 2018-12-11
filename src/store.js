@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     map: {
       map: null,
+      basemap: 'PI',
       parcelCoords: [],
     }
   },
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     },
     setParcelCoords(state, payload) {
       state.map.parcelCoords = payload;
+    },
+    setBasemap(state, payload) {
+      state.map.basemap = payload;
     }
   },
   actions: {
