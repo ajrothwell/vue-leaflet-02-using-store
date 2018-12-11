@@ -3,12 +3,18 @@
 
   export default {
     name: 'Polygon_',
-    props: [
-      'latlngs',
-      'color',
-      'weight',
-      'fillColor',
-    ],
+    props: {
+      'latlngs': Array,
+      'color': {
+        type: String,
+        default: 'blue'
+      },
+      'weight': {
+        type: Number,
+        default: 3
+      },
+      'fillColor': String
+    },
     mounted() {
       const leafletElement = this.$leafletElement = this.createLeafletElement();
       const map = this.$store.state.map.map;
@@ -16,9 +22,6 @@
         leafletElement.addTo(map);
       }
     },
-    // destroyed() {
-    //   this.$leafletElement._map.removeLayer(this.$leafletElement);
-    // },
     render(h) {
       return;
     },
@@ -34,11 +37,14 @@
     },
     methods: {
       createLeafletElement() {
-        const newPolygon = new Polygon(this.$props.latlngs, {
-          color: this.$props.color,
-          weight: this.$props.weight,
-          fillColor: this.$props.fillColor,
-      });
+        const props = this.$props;
+        const { latlngs, ...options } = props || null;
+        const newPolygon = new Polygon(latlngs, options);
+        // const newPolygon = new Polygon(this.$props.latlngs, {
+        //   color: this.$props.color,
+        //   weight: this.$props.weight,
+        //   fillColor: this.$props.fillColor,
+        // });
         return newPolygon;
       },
       parentMounted(parent) {
