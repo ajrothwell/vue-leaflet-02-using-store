@@ -9,6 +9,7 @@ export default new Vuex.Store({
       map: null,
       basemap: 'PI',
       parcelCoords: [],
+      shouldShowCircleMarker: false,
     }
   },
   mutations: {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     setBasemap(state, payload) {
       state.map.basemap = payload;
+    },
+    setShouldShowCircleMarker(state, payload) {
+      state.map.shouldShowCircleMarker = payload;
     }
   },
   actions: {

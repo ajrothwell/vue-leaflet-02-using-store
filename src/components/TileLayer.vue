@@ -10,12 +10,15 @@
         leafletElement.addTo(map);
       }
     },
-    destroyed() { this.$leafletElement._map.removeLayer(this.$leafletElement); },
+    destroyed() {
+      const map = this.$store.state.map.map;
+      map.removeLayer(this.$leafletElement);
+    },
     render(h) { return; },
     methods: {
       createLeafletElement() {
-        const mapLayer = new TileLayer(this.$props.url);
-        return mapLayer;
+        const { ...options } = this.$props;
+        return new TileLayer(options.url);
       },
       parentMounted(parent) {
         const map = parent.$leafletElement;

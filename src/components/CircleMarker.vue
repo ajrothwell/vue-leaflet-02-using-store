@@ -3,14 +3,22 @@
   export default {
     name: 'CircleMarker',
     props: ['latlng', 'radius', 'fillColor', 'color', 'weight', 'opacity', 'fillOpacity'],
-    mounted() { const leafletElement = this.$leafletElement = this.createLeafletElement(); },
     render(h) { return; },
+    mounted() {
+      const leafletElement = this.$leafletElement = this.createLeafletElement();
+      const map = this.$store.state.map.map;
+      if (map) {
+        leafletElement.addTo(map);
+      }
+    },
+    destroyed() {
+      const map = this.$parent.$leafletElement;
+      this.$leafletElement.removeFrom(map);
+    },
     methods: {
       createLeafletElement() {
-        const props = this.$props;
-        const { latlng, ...options } = props;
-        const newCircleMarker = new CircleMarker(latlng, options);
-        return newCircleMarker;
+        const { latlng, ...options } = this.$props;
+        return new CircleMarker(latlng, options);
       },
       parentMounted(parent) {
         const map = parent.$leafletElement;

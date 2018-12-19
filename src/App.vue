@@ -3,7 +3,7 @@
     <map_ :center="[39.952218, -75.163604]"
           :zoom="17"
     >
-      <tiled-map-layer v-if="basemap === 'OSM'" :url="'http://{s}.tile.osm.org/{z}/{x}/{y}.png'" />
+      <tile-layer v-if="basemap === 'OSM'" :url="'http://{s}.tile.osm.org/{z}/{x}/{y}.png'" />
       <esri-tiled-map-layer v-if="basemap === 'PI'" :url="'//tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityImagery_2018_3in/MapServer/'" />
       <esri-tiled-map-layer v-if="basemap === 'PI'" :url="'//tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityImagery_Labels/MapServer'" />
       <circle-marker :latlng="[39.952218, -75.163604]"
@@ -13,8 +13,9 @@
                      :fillColor="'red'"
                      :fillOpacity="1"
                      :opacity="1"
+                     v-if="shouldShowCircleMarker"
       />
-      <polygon_ :latlngs="[[39.953229, -75.162204],[39.953110, -75.161308],[39.952830, -75.161373],[39.952941, -75.162301],[39.953229, -75.162204]]" />
+      <!-- <polygon_ :latlngs="[[39.953229, -75.162204],[39.953110, -75.161308],[39.952830, -75.161373],[39.952941, -75.162301],[39.953229, -75.162204]]" /> -->
 
       <polygon_ :latlngs="this.parcelCoords"
                 :color="'red'"
@@ -22,7 +23,9 @@
                 :fillColor="'blue'"
       />
     </map_>
-    <!-- <button @click="setThisBasemap('OSM')">Open Street Map</button>
+    <!-- <button @click="setShouldShowCircleMarker(true)">Show Circle Marker</button>
+    <button @click="setShouldShowCircleMarker(false)">Hide Circle Marker</button>
+    <br><button @click="setThisBasemap('OSM')">Open Street Map</button>
     <button @click="setThisBasemap('PI')">Philly Imagery</button> -->
   </div>
 </template>
@@ -30,7 +33,7 @@
 <script>
 import Map_ from './components/Map.vue';
 import EsriTiledMapLayer from './components/EsriTiledMapLayer.vue';
-import TiledMapLayer from './components/TiledMapLayer.vue';
+import TileLayer from './components/TileLayer.vue';
 import EsriFeatureLayer from './components/FeatureLayer.vue';
 import CircleMarker from './components/CircleMarker.vue';
 import Polygon_ from './components/Polygon.vue';
@@ -38,8 +41,8 @@ export default {
   name: 'app',
   components: {
     Map_,
+    TileLayer,
     EsriTiledMapLayer,
-    TiledMapLayer,
     EsriFeatureLayer,
     CircleMarker,
     Polygon_
@@ -48,14 +51,20 @@ export default {
     basemap() {
       return this.$store.state.map.basemap;
     },
+    // shouldShowCircleMarker() {
+    //   return this.$store.state.map.shouldShowCircleMarker;
+    // },
     parcelCoords() {
       return this.$store.state.map.parcelCoords || [];
     }
   },
   methods: {
-    setThisBasemap(val) {
-      this.$store.commit('setBasemap', val)
-    }
+    // setThisBasemap(val) {
+    //   this.$store.commit('setBasemap', val);
+    // },
+    // setShouldShowCircleMarker(val) {
+    //   this.$store.commit('setShouldShowCircleMarker', val);
+    // }
   }
 }
 </script>

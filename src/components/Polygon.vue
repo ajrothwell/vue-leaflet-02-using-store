@@ -3,6 +3,7 @@
 
   export default {
     name: 'Polygon_',
+    render(h) { return; },
     props: {
       'latlngs': Array,
       'color': {
@@ -22,14 +23,11 @@
         leafletElement.addTo(map);
       }
     },
-    render(h) {
-      return;
-    },
     watch: {
       latlngs(nextLatLngs) {
-        this.$leafletElement._map.removeLayer(this.$leafletElement);
-        const leafletElement = this.$leafletElement = this.createLeafletElement();
         const map = this.$store.state.map.map;
+        map.removeLayer(this.$leafletElement);
+        const leafletElement = this.$leafletElement = this.createLeafletElement();
         if (map) {
           leafletElement.addTo(map);
         }
@@ -37,15 +35,8 @@
     },
     methods: {
       createLeafletElement() {
-        const props = this.$props;
-        const { latlngs, ...options } = props || null;
-        const newPolygon = new Polygon(latlngs, options);
-        // const newPolygon = new Polygon(this.$props.latlngs, {
-        //   color: this.$props.color,
-        //   weight: this.$props.weight,
-        //   fillColor: this.$props.fillColor,
-        // });
-        return newPolygon;
+        const { latlngs, ...options } = this.$props;
+        return new Polygon(latlngs, options);
       },
       parentMounted(parent) {
         const map = parent.$leafletElement;
