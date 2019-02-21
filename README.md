@@ -1,4 +1,4 @@
-# simple-vue-leaflet-2
+# vue-leaflet-02-using-store
 
 ## Project setup
 ```
